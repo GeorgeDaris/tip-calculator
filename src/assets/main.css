@@ -1,5 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .scrollbar-color {
+    scrollbar-color: color-mix(
+        in srgb,
+        theme(colors.light-grayish-cyan),
+        theme(colors.dark-grayish-cyan) 20%
+      )
+      theme(colors.very-light-grayish-cyan);
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .sr-only:not(:focus):not(:active) {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}
