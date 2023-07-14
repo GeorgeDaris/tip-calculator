@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reactive, ref, computed } from 'vue'
-// import type { Ref } from 'vue'
 
 import NumberInput from './NumberInput.vue'
 
@@ -25,7 +24,6 @@ const handleAmount = (type: string, newValue: number) => {
 }
 
 const showCustomLabel = computed(() => {
-  // shows the label only when the user changes the value of the tip amount to one that doesn't exist already
   return tipAmounts.some((tip) => selectedAmount.value === tip)
 })
 
@@ -45,19 +43,13 @@ const reset = () => {
   selectedAmount.value = 0
   customAmount.value = 0
 }
-
-// const selectTipAmount = (tip: number) => {
-//   selectedAmount.value = tip
-//   activeState.value = 'bg-strong-cyan'
-// }
 </script>
 
 <template>
   <article
-    class="bg-white-primary text-grayish-cyan rounded-lg p-6 shadow-lg grid md:grid-cols-2 md:grid-rows-1 grid-rows-2 grid-cols-1 md:gap-x-[5%] gap-y-[5%]"
+    class="bg-white-primary text-grayish-cyan rounded-lg p-6 shadow-lg grid md:grid-cols-2 md:grid-rows-1 grid-rows-2 grid-cols-1 md:gap-x-[5%] gap-y-[5%] max-w-4xl"
   >
     <form action="">
-      <!-- {{ bill }} -->
       <label :for="`bill-${bill}`" class="flex flex-col">
         Bill
         <NumberInput
@@ -108,17 +100,9 @@ const reset = () => {
             >
               Custom
             </span>
-            <!-- <span
-              v-if="showCustomLabel"
-              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none text-dark-grayish-cyan"
-            >
-              Custom
-            </span> -->
           </label>
         </li>
       </ul>
-      <!-- {{ selectedAmount }} -->
-
       <label :for="`people-${people}`" class="flex flex-col">
         Number of People
         <NumberInput
@@ -129,7 +113,6 @@ const reset = () => {
           @changeAmount="(e) => handleAmount('people', e)"
         />
       </label>
-      <!-- {{ people }} -->
     </form>
     <section
       class="px-6 py-8 bg-very-dark-cyan text-white-primary rounded-lg flex flex-col mb-8 md:mb-0"

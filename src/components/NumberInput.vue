@@ -26,8 +26,6 @@ defineEmits(['changeAmount'])
 
 let newAmount: Ref<number | undefined> = ref()
 
-let warning = ref('')
-
 //Computed properties for styling purposes
 
 const inputFilled = computed(() => {
@@ -42,39 +40,15 @@ const warnText = computed(() => {
   return newAmount.value == 0 ? "Can't be 0" : ''
 })
 
-// const warnText = computed(() => {
-//   // eslint-disable-next-line no-useless-escape
-//   return newAmount.value == 0 ? ["after:content-['Cannot_be_0']"] : 'after:content-[``]'
-// })
-
 watch(
   () => props.amount,
   () => {
     //Resetting the values after the user clears the added information
-
     if (!props.amount) {
       newAmount.value = 0
     }
   }
 )
-
-// onUpdated(() => {
-//Resetting the values after the user clears the added information
-
-// if (!props.amount) {
-//using a timeout function to help with Chrome
-// setTimeout(() => {
-// newAmount.value = undefined
-// }, 600)
-// }
-// })
-// Ref<number> =
-
-//import iconSrc from `${icon}`
-
-// const iconSrc = computed(() => {
-//   return new URL(`../assets/${props.icon}.svg`, import.meta.url).href
-// })
 </script>
 
 <template>
@@ -91,16 +65,14 @@ watch(
       :placeholder="placeholder"
       pattern="[0-1000]+"
       @input="$emit('changeAmount', newAmount)"
-      class="w-full rounded-md bg-very-light-grayish-cyan text-base font-spaceMono text-right font-bold p-2 accent-strong-cyan caret-strong-cyan focus-within:text-very-dark-cyan invalid:ring-[#c29485] invalid:ring-2"
+      class="w-full rounded-md bg-very-light-grayish-cyan text-base font-spaceMono text-right font-bold p-2 accent-strong-cyan caret-strong-cyan focus-within:text-very-dark-cyan focus:ring-2 focus:ring-strong-cyan focus:outline-none invalid:ring-[#c29485] invalid:ring-2 focus:invalid:ring-[#c29485]"
       :class="[inputFilled, textCenter]"
     />
   </span>
-  <!-- {{ iconSrc }} -->
-  <!-- <img src="iconSrc" alt="a" /> -->
-  <!-- <img :src="iconSrc" /> -->
 </template>
 
 <style scoped>
+/* Taken form CSSTricks to hide the number input's arrows, to match it with the design */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
