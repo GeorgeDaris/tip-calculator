@@ -49,7 +49,8 @@ const reset = () => {
   <article
     class="bg-white-primary text-grayish-cyan rounded-lg p-6 shadow-lg grid md:grid-cols-2 md:grid-rows-1 grid-rows-2 grid-cols-1 md:gap-x-[5%] gap-y-[5%] max-w-4xl"
   >
-    <form action="">
+    <h2 class="sr-only">Tip calculator</h2>
+    <form>
       <label :for="`bill-${bill}`" class="flex flex-col">
         Bill
         <NumberInput
@@ -117,6 +118,7 @@ const reset = () => {
     <section
       class="px-6 py-8 bg-very-dark-cyan text-white-primary rounded-lg flex flex-col mb-8 md:mb-0"
     >
+      <h2 class="sr-only">Result</h2>
       <div class="flex flex-row items-center">
         <p>
           Tip Amount <br />

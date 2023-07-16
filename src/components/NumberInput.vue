@@ -53,9 +53,9 @@ watch(
 
 <template>
   <span
-    class="inline-block relative mt-1 after:content-[attr(warn)] after:absolute after:-top-7 after:right-0 after:text-[#c29485]"
+    class="inline-block relative mt-1 after:content-[attr(data-warn)] after:absolute after:-top-7 after:right-0 after:text-[#c29485]"
     :class="[icon]"
-    :warn="warnText"
+    :data-warn="warnText"
   >
     <input
       type="number"
@@ -63,7 +63,6 @@ watch(
       :id="`${name}-${amount}`"
       v-model="newAmount"
       :placeholder="placeholder"
-      pattern="[0-1000]+"
       @input="$emit('changeAmount', newAmount)"
       class="w-full rounded-md bg-very-light-grayish-cyan text-base font-spaceMono text-right font-bold p-2 accent-strong-cyan caret-strong-cyan focus-within:text-very-dark-cyan focus:ring-2 focus:ring-strong-cyan focus:outline-none invalid:ring-[#c29485] invalid:ring-2 focus:invalid:ring-[#c29485]"
       :class="[inputFilled, textCenter]"

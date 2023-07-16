@@ -16,8 +16,9 @@ const splitTitle = (word: string, splitAt: number[]) => {
 <template>
   <header
     class="font-spaceMono uppercase font-bold text-xl tracking-[0.4rem] text-center mb-12 mt-12 md:mt-0"
-    v-html="splitTitle(title, [0, 4])"
-  ></header>
+  >
+    <h1 v-html="splitTitle(title, [0, 4])"></h1>
+  </header>
   <main class="grid justify-items-center">
     <TipCalculator />
   </main>
