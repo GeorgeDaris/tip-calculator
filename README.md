@@ -40,65 +40,82 @@ Users should be able to:
 ### Built with
 
 - Semantic HTML5 markup
-- CSS custom properties
-- Flexbox
-- CSS Grid
-- Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
-
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+- Vue 3 (Composition API)
+- Typescript
+- Tailwind CSS
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+I used this project to learn Typescript, which I had been meaning to learn for a while. As someone who has some experience with typed languages, it was interesting to bring the safety it offers to a web project. This app isn't complex enough to _need_ this kind of safety, but I was surprised to see how much more readable it made the code.
 
-To see how you can add code snippets, see below:
+Take this as an example:
+
+```ts
+const splitTitle = (word: string, splitAt: number[]) => {
+  const first = word.slice(splitAt[0], splitAt[1])
+  const last = word.slice(splitAt[1])
+  return `${first} <br /> ${last}`
+}
+
+splitTitle('Splitter', [0, 4])
+// returns:
+//spli
+//tter
+```
+
+This function splits a word into two parts based on the specified place, and prints it out in two lines. Using Typescript we can declare the types of the parameters, making the function easier to understand.
+
+Types can be specified through inference, meaning that this variable will have a type of `Array` without having to be explicitly declared: `const tipAmounts = reactive([5, 10, 15, 25, 50])`.
+
+#### Vue with Typescript
+
+When using Vue with Typescript, I had difficulty working with otherwise simple functionality at first. One has to be more explicit when declaring props, since types obviously matter. A variable of type `number` can't be used as an input's name, since it is a number. To use it properly, string interpolation can be used to pass the value as a string:
 
 ```html
-<h1>Some HTML code I'm proud of</h1>
+<input
+    type="number"
+    :name="`${amount}`"
+    :id="`amount-${amount}` />
 ```
 
-```css
-.proud-of-this-css {
-  color: papayawhip;
-}
+Another thing I learned is that it is better to [use strings as the first part of an id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) when working with inputs.
+
+The object syntax is also useful for declaring props with types and default values, as opposed to the simpler array syntax I had been using in the past:
+
+```ts
+defineProps({
+  amount: {
+    type: Number,
+    default: 0
+  }
+})
 ```
 
-```js
-const proudOfThisFunc = () => {
-  console.log('🎉')
-}
-```
+#### Accessibility
 
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
+Despite the simplicity of this project, I found many solutions which had accessibility issues due to a lack of semantic markup and missing label and input attributes. It should be noted that the design itself isn't accessible to users with vision impairment, as a quick look at the accessibility tab of the dev tools will show that certain text leafs don't have sufficient contrast.
 
-**Note: Delete this note and the content within this section and replace with your own learnings.**
+While creating the `NumberInput` component I made use of semantic markup and learned some best practices along the way to make it reusable and accessible. The input can access a name and an id based on props to bind it with the label, and an optional placeholder can also be specified.
+
+#### From design to code
+
+It was interesting to create something based on an existing design again while making sure to keep it responsive and as close as possible to the original design. I used the colours provided by the design file to extend the Tailwind theme and use them across the app. Flexbox and Grid were also used to layout the contents of the app.
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+Now that I have gotten down the basics of Typescript, I would like to focus on a more complex project where union types and interfaces could be used, among more advanced concepts.
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+- [Typescript Handbook](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) - For learning the basics.
+- [Typescript with Composition API](https://vuejs.org/guide/typescript/composition-api.html) - For learning how to use Typescript with Vue's Composition API.
+- [Customizing Tailwind](https://tailwindcss.com/docs/adding-custom-styles) - Helped me learn some new things about Tailwind which made my code cleaner.
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
+- Github - [George Daris](https://github.com/GeorgeDaris)
+- Frontend Mentor - [@GeorgeDaris](https://www.frontendmentor.io/profile/GeorgeDaris)
 
 ## Acknowledgments
 
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
+I would like to thank the folks over at the VueLand Discord server, who were kind enough to help me out with questions regarding Typescript with Vue.
