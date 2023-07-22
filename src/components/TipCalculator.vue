@@ -1,27 +1,16 @@
 <script setup lang="ts">
 import { reactive, ref, computed } from 'vue'
+import type { Ref } from 'vue'
 
 import NumberInput from './NumberInput.vue'
 
 const tipAmounts = reactive([5, 10, 15, 25, 50])
 
-let selectedAmount = ref(0)
-let customAmount = ref(0)
+let selectedAmount: Ref<number | undefined> = ref(0)
+let customAmount: Ref<number | undefined> = ref()
 
-let bill = ref(0)
-let people = ref(0)
-
-const setAmount = (amount: { value: number }, newAmount: number) => {
-  amount.value = newAmount
-}
-
-const handleAmount = (type: string, newValue: number) => {
-  if (type === 'bill') {
-    setAmount(bill, newValue)
-  } else if (type == 'people') {
-    setAmount(people, newValue)
-  }
-}
+let bill: Ref<number | undefined> = ref()
+let people: Ref<number | undefined> = ref()
 
 const showCustomLabel = computed(() => {
   return tipAmounts.some((tip) => selectedAmount.value === tip)
@@ -38,10 +27,11 @@ const tipPerPerson = computed(() => {
 })
 
 const reset = () => {
-  bill.value = 0
-  people.value = 0
-  selectedAmount.value = 0
-  customAmount.value = 0
+  //setting them to undefined, to show the placeholder
+  bill.value = undefined
+  people.value = undefined
+  selectedAmount.value = undefined
+  customAmount.value = undefined
 }
 </script>
 
@@ -51,22 +41,15 @@ const reset = () => {
   >
     <h2 class="sr-only">Tip calculator</h2>
     <form>
-      <label :for="`bill-${bill}`" class="flex flex-col">
+      <label class="flex flex-col">
         Bill
-        <NumberInput
-          :amount="bill"
-          :name="`bill`"
-          :icon="`dollar`"
-          :placeholder="`0`"
-          @changeAmount="(e) => handleAmount('bill', e)"
-        />
+        <NumberInput v-model="bill" :icon="`dollar`" :placeholder="`0`" />
       </label>
       <p class="mt-2">Select Tip %</p>
 
       <ul class="mt-4 mb-2 grid grid-cols-2 md:grid-cols-3 gap-4">
         <li v-for="tip in tipAmounts" :key="tip">
           <label
-            :for="`tip-${tip}`"
             class="tip-label cursor-pointer p-2 rounded-md block text-center hover:bg-strong-cyan focus-within:ring-2 focus-within:ring-light-cyan transition-colors duration-300"
             :class="
               tip === selectedAmount
@@ -76,8 +59,6 @@ const reset = () => {
           >
             <input
               type="radio"
-              name="`tip-${tip}`"
-              :id="`tip-${tip}`"
               v-model="selectedAmount"
               :value="tip"
               class="appearance-none h-0 w-0"
@@ -86,15 +67,14 @@ const reset = () => {
           </label>
         </li>
         <li>
-          <label :for="`custom-${customAmount}`" class="relative">
+          <label class="relative">
             <NumberInput
               class="mt-0"
-              :amount="customAmount"
-              :name="`custom`"
+              v-model="customAmount"
+              @input="selectedAmount = customAmount"
               :placeholder="`Custom`"
               :placeholderCenter="true"
               :class="showCustomLabel ? '' : ['ring-2', 'ring-light-cyan', 'rounded-md']"
-              @changeAmount="(e) => ((selectedAmount = e), (customAmount = e))"
             />
             <span
               class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none text-dark-grayish-cyan sr-only"
@@ -104,15 +84,9 @@ const reset = () => {
           </label>
         </li>
       </ul>
-      <label :for="`people-${people}`" class="flex flex-col">
+      <label class="flex flex-col">
         Number of People
-        <NumberInput
-          :amount="bill"
-          :name="`people`"
-          :icon="`person`"
-          :placeholder="`0`"
-          @changeAmount="(e) => handleAmount('people', e)"
-        />
+        <NumberInput v-model="people" :icon="`person`" :placeholder="`0`" />
       </label>
     </form>
     <section

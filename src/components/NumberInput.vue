@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import type { Ref } from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
-  amount: {
-    type: Number,
-    default: 0
-  },
-  name: {
-    type: String,
-    default: 'amount'
+  modelValue: {
+    type: Number
   },
   icon: String,
   placeholder: {
@@ -22,14 +16,13 @@ const props = defineProps({
   }
 })
 
-defineEmits(['changeAmount'])
-
-let newAmount: Ref<number | undefined> = ref()
+// defineEmits(['changeAmount'])
+const emit = defineEmits(['update:modelValue'])
 
 //Computed properties for styling purposes
 
 const inputFilled = computed(() => {
-  return newAmount.value !== 0 ? ' text-very-dark-cyan' : 'text-grayish-cyan'
+  return props.modelValue !== 0 ? ' text-very-dark-cyan' : 'text-grayish-cyan'
 })
 
 const textCenter = computed(() => {
@@ -37,18 +30,13 @@ const textCenter = computed(() => {
 })
 
 const warnText = computed(() => {
-  return newAmount.value == 0 ? "Can't be 0" : ''
+  return props.modelValue == 0 ? "Can't be 0" : ''
 })
 
-watch(
-  () => props.amount,
-  () => {
-    //Resetting the values after the user clears the added information
-    if (!props.amount) {
-      newAmount.value = 0
-    }
-  }
-)
+const amountValue = computed({
+  get: () => props.modelValue,
+  set: (newVal) => emit('update:modelValue', newVal)
+})
 </script>
 
 <template>
@@ -59,11 +47,8 @@ watch(
   >
     <input
       type="number"
-      :name="`${name}-${amount}`"
-      :id="`${name}-${amount}`"
-      v-model="newAmount"
       :placeholder="placeholder"
-      @input="$emit('changeAmount', newAmount)"
+      v-model="amountValue"
       class="w-full rounded-md bg-very-light-grayish-cyan text-base font-spaceMono text-right font-bold p-2 accent-strong-cyan caret-strong-cyan focus-within:text-very-dark-cyan focus:ring-2 focus:ring-strong-cyan focus:outline-none invalid:ring-[#c29485] invalid:ring-2 focus:invalid:ring-[#c29485]"
       :class="[inputFilled, textCenter]"
     />
