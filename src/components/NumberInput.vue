@@ -6,6 +6,7 @@ const props = defineProps({
     type: Number
   },
   icon: String,
+  paddingY: Number,
   placeholder: {
     type: String,
     default: ''
@@ -13,7 +14,8 @@ const props = defineProps({
   placeholderCenter: {
     type: Boolean,
     default: false
-  }
+  },
+  placeholderBottom: Boolean
 })
 
 // defineEmits(['changeAmount'])
@@ -29,6 +31,14 @@ const textCenter = computed(() => {
   return props.placeholderCenter ? 'placeholder:text-center' : ''
 })
 
+const paddingY = computed(() => {
+  return props.paddingY ? `p-${props.paddingY}` : ''
+})
+
+const warnPosition = computed(() => {
+  return props.placeholderBottom ? 'after:-bottom-7 md:after:-left-6' : 'after:-top-7'
+})
+
 const warnText = computed(() => {
   return props.modelValue == 0 ? "Can't be 0" : ''
 })
@@ -41,16 +51,16 @@ const amountValue = computed({
 
 <template>
   <span
-    class="inline-block relative mt-1 after:content-[attr(data-warn)] after:absolute after:-top-7 after:right-0 after:text-[#c29485]"
-    :class="[icon]"
+    class="inline-block relative mt-1 after:content-[attr(data-warn)] after:absolute after:right-0 after:text-[#c29485]"
+    :class="[icon, warnPosition]"
     :data-warn="warnText"
   >
     <input
       type="number"
       :placeholder="placeholder"
       v-model="amountValue"
-      class="w-full rounded-md bg-very-light-grayish-cyan text-base font-spaceMono text-right font-bold p-2 accent-strong-cyan caret-strong-cyan focus-within:text-very-dark-cyan focus:ring-2 focus:ring-strong-cyan focus:outline-none invalid:ring-[#c29485] invalid:ring-2 focus:invalid:ring-[#c29485]"
-      :class="[inputFilled, textCenter]"
+      class="w-full rounded-md bg-very-light-grayish-cyan text-lg font-spaceMono text-right font-bold p-2 accent-strong-cyan caret-strong-cyan focus-within:text-very-dark-cyan focus:ring-2 focus:ring-strong-cyan focus:outline-none invalid:ring-[#c29485] invalid:ring-2 focus:invalid:ring-[#c29485]"
+      :class="[inputFilled, textCenter, paddingY]"
     />
   </span>
 </template>

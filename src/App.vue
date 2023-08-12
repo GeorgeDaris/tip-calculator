@@ -15,7 +15,7 @@ const splitTitle = (word: string, splitAt: number[]) => {
 
 <template>
   <header
-    class="font-spaceMono uppercase font-bold text-xl tracking-[0.4rem] text-center mb-12 mt-12 md:mt-0"
+    class="font-spaceMono uppercase font-bold text-xl text-title-dark-cyan tracking-[0.4rem] text-center mb-12 mt-12 md:mt-0"
   >
     <h1 v-html="splitTitle(title, [0, 4])"></h1>
   </header>

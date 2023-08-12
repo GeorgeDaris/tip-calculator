@@ -15,7 +15,8 @@ export const theme = {
     'light-grayish-cyan': 'hsl(185, 41%, 84%)',
     'very-light-grayish-cyan': 'hsl(189, 41%, 97%)',
     'light-cyan': '#9fe8df',
-    'white-primary': 'hsl(0, 0%, 100%)'
+    'white-primary': 'hsl(0, 0%, 100%)',
+    'title-dark-cyan': '#3D6666'
   },
   fontFamily: {
     spaceMono: ['Space Mono', 'sans-serif']
